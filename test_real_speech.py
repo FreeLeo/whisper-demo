@@ -4,11 +4,27 @@ import pyaudio
 from faster_whisper import WhisperModel
 
 
+filter_list = [
+    "谢谢大家",
+    "由 Amara.org 社群提供的字幕",
+    "感谢观看",
+    "中文字幕提供",
+    "MING PAO CANADA // MING PAO TORONTO",
+    "谢谢",
+    "中文字幕志愿者",
+    "明镜与点点栏目",
+    "优优独播剧场——YoYo Television Series Exclusive",
+    "響鐘"
+]
+
+
 def transcribe_chunk(model, chunk_file):
     text = ""
-    segments, info = model.transcribe(chunk_file, language="zh",  beam_size=1)
+    segments, info = model.transcribe(
+        chunk_file, language="zh",  beam_size=10, vad_filter=False)
     for segment in segments:
-        text += segment.text
+        if segment.text not in filter_list:
+            text += segment.text
     return text
 
 
@@ -36,24 +52,26 @@ def main2():
     stream = p.open(format=pyaudio.paInt16, channels=1,
                     rate=16000, input=True, frames_per_buffer=1024)
 
-    accuulated_transcription = ""
+    accumulated_transcription = ""
 
     try:
         while True:
             chunk_file = "temp_chunk.wav"
             record_chunk(p, stream, chunk_file)
             transcription = transcribe_chunk(model, chunk_file)
+            if not transcription.strip():
+                continue
             print(transcription)
             os.remove(chunk_file)
 
-            accuulated_transcription += transcription + " "
+            accumulated_transcription += transcription + " "
 
     except KeyboardInterrupt:
         print("Stopping...")
-        with open("log.txt", "w") as log_file:
-            log_file.write(accuulated_transcription)
+        with open("log/log.txt", "w") as log_file:
+            log_file.write(accumulated_transcription)
     finally:
-        print("LOG:" + accuulated_transcription)
+        print("LOG:" + accumulated_transcription)
         stream.stop_stream()
         stream.close()
         p.terminate()
