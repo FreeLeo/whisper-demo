@@ -10,7 +10,7 @@ from pathlib import Path
 import google.generativeai as genai
 
 genai.configure(
-    api_key="********************", transport="rest")
+    api_key="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", transport="rest")
 
 # Set up the model
 generation_config = {
