@@ -13,7 +13,7 @@ import tkinter.font as font
 GREEN = "\033[92m"
 RESET = "\033[0m"
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = ""
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 chat_log_filename = "log/chatbot_conversation_log.txt"

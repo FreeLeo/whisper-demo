@@ -3,7 +3,7 @@ from playsound import playsound
 import time
 import os
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = ""
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 response = client.audio.speech.create(

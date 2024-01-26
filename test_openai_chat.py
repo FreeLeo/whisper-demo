@@ -29,7 +29,7 @@ filter_list = [
     "谢谢观看"
 ]
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = ""
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 chat_log_filename = "log/chatbot_conversation_log.txt"
