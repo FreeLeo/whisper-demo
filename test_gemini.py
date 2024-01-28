@@ -10,7 +10,7 @@ from pathlib import Path
 import google.generativeai as genai
 
 genai.configure(
-    api_key="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", transport="rest")
+    api_key="", transport="rest")
 
 # Set up the model
 generation_config = {
@@ -49,8 +49,8 @@ if not (img := Path("file/dogandcat.webp")).exists():
 
 image_parts = [
     {
-        "mime_type": "image/webp",
-        "data": Path("file/dogandcat.webp").read_bytes()
+        "mime_type": "image/jpeg",
+        "data": Path("file/screenshot.jpg").read_bytes()
     },
 ]
 
